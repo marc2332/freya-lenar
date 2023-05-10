@@ -1,0 +1,10 @@
+[package]
+name = "freya-lenar"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dioxus = { git = "https://github.com/DioxusLabs/dioxus", rev="c9044111908338c347b2b00bb48f579e5d9e1877", features = ["macro", "hooks"]}
+freya = { git="https://github.com/marc2332/freya", rev="349fa2bca3efbb9797666d911acf6731eb3d79c9" }
+lenar = { git = "https://github.com/marc2332/lenar", rev = "7776c9a1b9e74bd85086dd04102893fc96ca95da" }
+dioxus-utils = { git = "https://github.com/marc2332/dioxus-utils", rev = "f25b33fe44ee71c9fe7332aa403d6fe5c68baa56" }
