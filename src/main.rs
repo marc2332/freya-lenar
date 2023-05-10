@@ -4,7 +4,6 @@ use lenar::parser::Parser;
 use lenar::runtime::Runtime;
 
 fn main() {
-
     launch_cfg(
         app,
         WindowConfig::<()>::builder()
@@ -22,15 +21,21 @@ fn app(cx: Scope) -> Element {
     render!(Body {})
 }
 
+static DEFAULT_CODE: &str = "
+let value = ref(10);
+let modifier = fn(val){
+    add(val 90);
+};
+modifier(value);
+";
+
 #[allow(non_snake_case)]
 fn Body(cx: Scope) -> Element {
     let theme = use_theme(cx);
     let output = use_state(cx, String::new);
     let editable = use_editable(
         cx,
-        || {
-            EditableConfig::new("let func = fn() { \"hi\" }; \nfunc()".to_string())
-        },
+        || EditableConfig::new(DEFAULT_CODE.trim().to_string()),
         EditableMode::SingleLineMultipleEditors,
     );
 
@@ -64,8 +69,6 @@ fn Body(cx: Scope) -> Element {
             } else if let Err(err) = res {
                 output.set(format!("Error -> {err:?}"));
             }
-            
-            
         }
     };
 
@@ -126,7 +129,7 @@ fn Body(cx: Scope) -> Element {
                                 }
                             };
 
-                            let highlights = editable.highlights_attr(&cx, line_index);
+                            let highlights = editable.highlights_attr(cx, line_index);
 
                             rsx! {
                                 rect {
